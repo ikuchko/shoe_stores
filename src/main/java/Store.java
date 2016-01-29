@@ -83,11 +83,36 @@ public class Store {
   }
 
   public void delete() {
-    String sql = "DELETE FROM stores WHERE id = :id";
+    String sqlJoinDelete = "DELETE FROM stores_brands WHERE store_id = :id";
+    String sqlDeleteStore = "DELETE FROM stores WHERE id = :id";
     try (Connection con = DB.sql2o.open()) {
-      con.createQuery(sql, true)
-        .addParameter("id", this.mId)
+      con.createQuery(sqlJoinDelete, true)
+        .addParameter("id", this.getId())
         .executeUpdate();
+      con.createQuery(sqlDeleteStore, true)
+        .addParameter("id", this.getId())
+        .executeUpdate();
+    }
+  }
+
+  public void assign(Brand brand) {
+    String sql = "INSERT INTO stores_brands (store_id, brand_id) VALUES (:store_id, :brand_id)";
+    try (Connection con = DB.sql2o.open()) {
+      con.createQuery(sql)
+        .addParameter("store_id", this.getId())
+        .addParameter("brand_id", brand.getId())
+        .executeUpdate();
+    }
+  }
+
+  public List<Brand> getBrands() {
+    String sql = "SELECT brands.id AS mId, brands.name AS mName FROM brands " +
+                 "INNER JOIN stores_brands AS s_b ON brands.id = s_b.brand_id " +
+                 "INNER JOIN stores ON stores.id = s_b.store_id WHERE stores.id = :id";
+    try (Connection con = DB.sql2o.open()) {
+      return con.createQuery(sql)
+        .addParameter("id", this.getId())
+        .executeAndFetch(Brand.class);
     }
   }
 

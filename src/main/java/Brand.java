@@ -67,9 +67,13 @@ public class Brand {
   }
 
   public void delete() {
-    String sql = "DELETE FROM brands WHERE id = :id";
+    String sqlDeleteJoin = "DELETE FROM stores_brands WHERE brand_id = :id";
+    String sqlDeleteBrand = "DELETE FROM brands WHERE id = :id";
     try (Connection con = DB.sql2o.open()) {
-      con.createQuery(sql, true)
+      con.createQuery(sqlDeleteJoin, true)
+        .addParameter("id", this.mId)
+        .executeUpdate();
+      con.createQuery(sqlDeleteBrand, true)
         .addParameter("id", this.mId)
         .executeUpdate();
     }

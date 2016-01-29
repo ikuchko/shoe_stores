@@ -31,11 +31,14 @@ public class  BrandTest{
   }
 
   @Test
-  public void brand_deletedSuccessfully() {
+  public void store_deletedSuccessfully() {
+    Store store = new Store("CHICO", "121 Sam St. LA", "(909) 222-2222");
+    store.save();
     Brand brand = new Brand("Puma");
     brand.save();
+    store.assign(brand);
     brand.delete();
-    assertEquals(0, brand.all().size());
+    assertEquals(0, Brand.all().size());
   }
 
 }
