@@ -18,7 +18,7 @@ h3, h4, p {
 
 a {
   text-decoration: none !important;
-  color: #333; 
+  color: #947133;
 }
 
 .navbar, .panel-grey {
@@ -63,4 +63,8 @@ a {
 
 .glyphicon {
   color: white;
+}
+
+.small {
+  max-width: 100px;
 }

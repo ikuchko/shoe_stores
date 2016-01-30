@@ -34,7 +34,8 @@ public class Store {
       Store newStore = (Store) otherStore;
       return (newStore.getName().equals(this.getName())) &&
              (newStore.getAddress().equals(this.getAddress())) &&
-             (newStore.getPhoneNumber().equals(this.getPhoneNumber()));
+             (newStore.getPhoneNumber().equals(this.getPhoneNumber())) &&
+             (newStore.getId() == this.getId());
     }
   }
 
@@ -51,7 +52,7 @@ public class Store {
   }
 
   public static List<Store> all() {
-    String sql = "SELECT name AS mName, address AS mAddress, phone_number AS mPhoneNumber FROM stores";
+    String sql = "SELECT id AS mId, name AS mName, address AS mAddress, phone_number AS mPhoneNumber FROM stores ORDER BY name";
     try (Connection con = DB.sql2o.open()) {
       return con.createQuery(sql)
         .executeAndFetch(Store.class);
@@ -59,7 +60,7 @@ public class Store {
   }
 
   public static Store find(int id) {
-    String sql = "SELECT name AS mName, address AS mAddress, phone_number AS mPhoneNumber FROM stores WHERE id = :id";
+    String sql = "SELECT id AS mId, name AS mName, address AS mAddress, phone_number AS mPhoneNumber FROM stores WHERE id = :id ORDER BY name";
     try (Connection con = DB.sql2o.open()) {
       return con.createQuery(sql)
         .addParameter("id", id)
@@ -108,10 +109,10 @@ public class Store {
   public List<Brand> getBrands() {
     String sql = "SELECT brands.id AS mId, brands.name AS mName FROM brands " +
                  "INNER JOIN stores_brands AS s_b ON brands.id = s_b.brand_id " +
-                 "INNER JOIN stores ON stores.id = s_b.store_id WHERE stores.id = :id";
+                 "INNER JOIN stores ON stores.id = s_b.store_id WHERE stores.id = :id ORDER BY brands.name";
     try (Connection con = DB.sql2o.open()) {
       return con.createQuery(sql)
-        .addParameter("id", this.getId())
+        .addParameter("id", this.mId)
         .executeAndFetch(Brand.class);
     }
   }

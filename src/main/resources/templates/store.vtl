@@ -1,0 +1,23 @@
+<h3>$store.getName()</h3>
+<h4>Address: $store.getAddress()</h4>
+<h4>Contacts: $store.getPhoneNumber()</h4>
+
+<hr>
+
+<h4>Brands:</h4>
+#foreach ($brand in $store.getBrands())
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Name</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <p><a href="/brands/$brand.getId()">$brand.getName()</a></p>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+#end

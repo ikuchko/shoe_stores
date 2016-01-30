@@ -1,0 +1,67 @@
+<form class="form-inline" action="/brand/add" method="post">
+  <p><strong>ADD NEW BRAND</strong></p>
+  <div class="form-group">
+    <input type="text" class="form-control" id="newbrand" name="newbrand" placeholder="New brand">
+    <button type="submit" class="btn btn-default add-brand-btn">Add</button>
+  </div>
+</form>
+<div class="col-md-4">
+  <table class="table">
+    <thead>
+      <tr>
+        <th><h3>All brands</h3></th>
+      </tr>
+    </thead>
+    <tbody>
+      #foreach($brand in $brands)
+        <tr>
+          #if($brand.getId() == $id)
+            <form class="form-inline" action="/brands/update/$brand.getId()" method="post">
+              <td>
+                <div class="form-group">
+                  <input type="text" class="form-control small" name="updatebrand" id="updatebrand" value="$brand.getName()">
+                </div>
+              </td>
+              <td>
+                <div class="form-group">
+                  <button type="submit" class="btn btn-default btn-block btn-update small" name="button">Update</button>
+                </div>
+              </td>
+            </form>
+          #else
+            <td><a href="/brands/$brand.getId()">$brand.getName()</a></td>
+            <td><a href="/brands/change/$brand.getId()">change</a></td>
+          #end
+        </tr>
+      #end
+    </tbody>
+  </table>
+</div>
+<div class="col-md-8">
+  #if ($brand)
+    <p>Some information may not be accurate</p>
+    #foreach ($store in $brand.getStores())
+      <div class="panel panel-default">
+        <div class="panel-heading">Stores for brend <strong>$brand.getName()</strong></div>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Contact information</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><p><a href="/store/$store.getId()">$store.getName()</a></p></td>
+              <td>
+                <p>$store.getAddress()</p>
+                <br>
+                <p>$store.getPhoneNumber()</p>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    #end
+  #end
+</div>

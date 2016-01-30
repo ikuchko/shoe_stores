@@ -42,8 +42,8 @@ public class  StoreTest{
     secondBrand.save();
     store.assign(firstBrand);
     store.assign(secondBrand);
-    assertTrue(store.getBrands().get(0).equals(firstBrand));
-    assertTrue(store.getBrands().get(1).equals(secondBrand));
+    assertTrue(store.getBrands().get(1).equals(firstBrand));
+    assertTrue(store.getBrands().get(0).equals(secondBrand));
   }
 
   @Test

@@ -24,22 +24,23 @@ public class Brand {
       return false;
     } else {
       Brand newBrand = (Brand) otherBrand;
-      return (newBrand.getName().equals(this.getName()));
+      return (this.getName().equals(newBrand.getName())) &&
+             (this.getId() == newBrand.getId());
     }
   }
 
   public void save() {
     String sql = "INSERT INTO brands (name) VALUES (:name)";
-    try (Connection con = DB.sql2o.open()) {
+    try(Connection con = DB.sql2o.open()) {
       this.mId = (int) con.createQuery(sql, true)
-        .addParameter("name", mName)
+        .addParameter("name", this.mName)
         .executeUpdate()
         .getKey();
     }
   }
 
   public static List<Brand> all() {
-    String sql = "SELECT name AS mName FROM brands";
+    String sql = "SELECT id AS mId, name AS mName FROM brands ORDER BY name";
     try (Connection con = DB.sql2o.open()) {
       return con.createQuery(sql)
         .executeAndFetch(Brand.class);
@@ -47,7 +48,7 @@ public class Brand {
   }
 
   public static Brand find(int id) {
-    String sql = "SELECT name AS mName FROM brands WHERE id = :id";
+    String sql = "SELECT id AS mId, name AS mName FROM brands WHERE id = :id ORDER BY name";
     try (Connection con = DB.sql2o.open()) {
       return con.createQuery(sql)
         .addParameter("id", id)
@@ -79,5 +80,15 @@ public class Brand {
     }
   }
 
+  public List<Store> getStores() {
+    String sql = "SELECT stores.id AS mId, stores.name AS mName, stores.address AS mAddress, stores.phone_number AS mPhoneNumber FROM brands " +
+                 "INNER JOIN stores_brands AS s_b ON brands.id = s_b.brand_id " +
+                 "INNER JOIN stores ON stores.id = s_b.store_id WHERE brands.id = :id ORDER BY stores.name";
+    try (Connection con = DB.sql2o.open()) {
+      return con.createQuery(sql)
+        .addParameter("id", this.getId())
+        .executeAndFetch(Store.class);
+    }
+  }
 
 }
