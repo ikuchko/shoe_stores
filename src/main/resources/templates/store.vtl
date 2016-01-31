@@ -19,7 +19,14 @@
   </h3>
   <h5>Address: <strong>$store.getAddress()</strong></h5>
   <h5>Contacts: <strong>$store.getPhoneNumber()</strong></h5>
-  <p><a class="small" href="/store/change/$store.getId()">found a bug?</a></p>
+  <form action="/store/delete/$store.getId()" method="post">
+    <p class="small-text">
+      <a href="/store/change/$store.getId()">found a bug</a>
+      or want
+      <button type="submit" class="link">delete</button>
+      ?
+    </p>
+  </form>
 #end
 
 <hr>
