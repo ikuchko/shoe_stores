@@ -61,10 +61,19 @@ a {
   font-size: 25px;
 }
 
-.glyphicon {
-  color: white;
+.small {
+  max-width: 180px;
 }
 
-.small {
-  max-width: 100px;
+.fix-width-7p {
+  width: 70%;
+}
+
+button {
+  background-color: #eee;
+}
+
+a.small {
+  font-size: 10px;
+  color: #B73398;
 }

@@ -45,6 +45,16 @@ public class App {
         model.put("template", "templates/store.vtl");
         Store store = Store.find(Integer.parseInt(request.params("id")));
         model.put("store", store);
+        model.put("brands", Brand.all());
+        return new ModelAndView(model, layout);
+      }, new VelocityTemplateEngine());
+
+      get("/store/change/:id", (request, response) -> {
+        HashMap<String, Object> model = new HashMap<String, Object>();
+        model.put("template", "templates/store.vtl");
+        Store store = Store.find(Integer.parseInt(request.params("id")));
+        model.put("store", store);
+        model.put("update", true);
         return new ModelAndView(model, layout);
       }, new VelocityTemplateEngine());
 
@@ -69,10 +79,32 @@ public class App {
         return null;
       });
 
+      post("/bradns/remove/:id", (request, response) -> {
+        Brand brand = Brand.find(Integer.parseInt(request.params("id")));
+        brand.delete();
+        response.redirect("/brands");
+        return null;
+      });
+
       post("/store/add", (request, response) -> {
         Store store = new Store(request.queryParams("newstore"), request.queryParams("newaddress"), request.queryParams("newphone"));
         store.save();
-        response.redirect("/brands");
+        response.redirect("/stores");
+        return null;
+      });
+
+      post("/store/update/:id", (request, response) -> {
+        Store store = Store.find(Integer.parseInt(request.params("id")));
+        store.update(request.queryParams("updatename"), request.queryParams("updateaddress"), request.queryParams("updatephone"));
+        response.redirect("/store/" + store.getId());
+        return null;
+      });
+
+      post("/store/addbrand/:id", (request, response) -> {
+        Store store = Store.find(Integer.parseInt(request.params("id")));
+        Brand brand = Brand.find(Integer.parseInt(request.queryParams("brandSelection")));
+        store.addBrand(brand);
+        response.redirect("/store/" + store.getId());
         return null;
       });
 

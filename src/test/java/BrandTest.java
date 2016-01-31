@@ -55,7 +55,7 @@ public class  BrandTest{
     store.save();
     Brand brand = new Brand("Puma");
     brand.save();
-    store.assign(brand);
+    store.addBrand(brand);
     brand.delete();
     assertEquals(0, Brand.all().size());
   }
@@ -66,7 +66,7 @@ public class  BrandTest{
     store.save();
     Brand brand = new Brand("Puma");
     brand.save();
-    store.assign(brand);
+    store.addBrand(brand);
     assertTrue(brand.getStores().get(0).equals(store));
   }
 

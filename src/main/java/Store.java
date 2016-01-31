@@ -96,13 +96,21 @@ public class Store {
     }
   }
 
-  public void assign(Brand brand) {
+  public void addBrand(Brand brand) {
+    int amount;
+    String sqlCheck = "SELECT count(id) FROM stores_brands WHERE store_id = :store_id AND brand_id = :brand_id";
     String sql = "INSERT INTO stores_brands (store_id, brand_id) VALUES (:store_id, :brand_id)";
     try (Connection con = DB.sql2o.open()) {
-      con.createQuery(sql)
+      amount = (int) con.createQuery(sqlCheck)
         .addParameter("store_id", this.getId())
         .addParameter("brand_id", brand.getId())
-        .executeUpdate();
+        .executeScalar(Integer.class);
+      if (amount == 0) {
+        con.createQuery(sql)
+          .addParameter("store_id", this.getId())
+          .addParameter("brand_id", brand.getId())
+          .executeUpdate();
+      }
     }
   }
 

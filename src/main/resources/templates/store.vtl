@@ -1,23 +1,52 @@
-<h3>$store.getName()</h3>
-<h4>Address: $store.getAddress()</h4>
-<h4>Contacts: $store.getPhoneNumber()</h4>
+#if ($update)
+  <form class="form-horizontal" action="/store/update/$store.getId()" method="post">
+    <div class="form-group">
+      <input type="text" class="form-control small" name="updatename" id="updatename" value="$store.getName()">
+    </div>
+    <div class="form-group">
+      <input type="text" class="form-control small" name="updateaddress" id="updateaddress" value="$store.getAddress()">
+    </div>
+    <div class="form-group">
+      <input type="text" class="form-control small" name="updatephone" id="updatephone" value="$store.getPhoneNumber()">
+    </div>
+    <div class="form-group">
+      <button type="submit" class="btn btn-default btn-block btn-update small" name="button">Update</button>
+    </div>
+  </form>
+#else
+  <h3>
+    <span class="label label-default">$store.getName()</span>
+  </h3>
+  <h5>Address: <strong>$store.getAddress()</strong></h5>
+  <h5>Contacts: <strong>$store.getPhoneNumber()</strong></h5>
+  <p><a class="small" href="/store/change/$store.getId()">found a bug?</a></p>
+#end
 
 <hr>
 
-<h4>Brands:</h4>
-#foreach ($brand in $store.getBrands())
-  <table class="table">
-    <thead>
-      <tr>
-        <th>Name</th>
-      </tr>
-    </thead>
-    <tbody>
+<table class="table">
+  <thead>
+    <tr>
+      <th><h4>Brands:</h4></th>
+    </tr>
+  </thead>
+  <tbody>
+    #foreach ($brand in $store.getBrands())
       <tr>
         <td>
           <p><a href="/brands/$brand.getId()">$brand.getName()</a></p>
         </td>
       </tr>
-    </tbody>
-  </table>
-#end
+    #end
+  </tbody>
+</table>
+
+<form class="form-inline" action="/store/addbrand/$store.getId()" method="post">
+  <label for="brandSelection">Add brand:</label>
+  <select id='brandSelection' name='brandSelection' type='text'>
+    #foreach ($brand in $brands)
+      <option value="$brand.getId()">$brand.getName()</option>
+    #end
+  </select>
+  <button type="submit" class="btn btn-default" name="submitSelection" id="submitSelection">Add</button>
+ </form>

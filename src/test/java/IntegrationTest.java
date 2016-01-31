@@ -67,7 +67,7 @@ public class IntegrationTest extends FluentTest {
     store.save();
     Brand brand = new Brand("Puma");
     brand.save();
-    store.assign(brand);
+    store.addBrand(brand);
     goTo("http://localhost:4567/brands");
     click("a", withText("Puma"));
     assertThat(pageSource()).contains(store.getAddress());
@@ -79,7 +79,7 @@ public class IntegrationTest extends FluentTest {
     store.save();
     Brand brand = new Brand("Puma");
     brand.save();
-    store.assign(brand);
+    store.addBrand(brand);
     goTo("http://localhost:4567/brands");
     click("a", withText("Puma"));
     click("a", withText("CHICO"));
@@ -92,7 +92,7 @@ public class IntegrationTest extends FluentTest {
     store.save();
     Brand brand = new Brand("Puma");
     brand.save();
-    store.assign(brand);
+    store.addBrand(brand);
     goTo("http://localhost:4567/store/" + store.getId());
     click("a", withText("Puma"));
     assertThat(pageSource()).contains("All brands");
@@ -111,10 +111,44 @@ public class IntegrationTest extends FluentTest {
     Brand brand = new Brand("Puma");
     brand.save();
     goTo("http://localhost:4567/brands");
-    click("a", withText("change"));
+    submit("#update-" + brand.getId());
     fill("#updatebrand").with("Nike");
     submit(".btn-update");
     assertThat(pageSource()).contains("Nike");
   }
+
+  @Test
+  public void brand_deletedSuccessfully() {
+    Brand brand = new Brand("Puma");
+    brand.save();
+    goTo("http://localhost:4567/brands");
+    submit("#delete-" + brand.getId());
+    assertThat(pageSource()).doesNotContain("Puma");
+  }
+
+  @Test
+  public void store_updatedSuccessfully() {
+    Store store = new Store("CHICO", "121 Sam St. LA", "(909) 222-2222");
+    store.save();
+    goTo("http://localhost:4567/store/" + store.getId());
+    click("a", withText("found a bug?"));
+    fill("#updatename").with("Forever 21");
+    submit(".btn-update");
+    assertThat(pageSource()).contains("Forever 21");
+  }
+
+  @Test
+  public void store_addedBrands() {
+    Store store = new Store("CHICO", "121 Sam St. LA", "(909) 222-2222");
+    store.save();
+    Brand brand = new Brand("Ecco");
+    brand.save();
+    goTo("http://localhost:4567/store/" + store.getId());
+    fillSelect("#brandSelection").withText(brand.getName());
+    submit("#submitSelection");
+    assertThat(pageSource()).contains("Ecco");
+  }
+
+
 
 }

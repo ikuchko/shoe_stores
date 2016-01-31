@@ -33,15 +33,15 @@ public class  StoreTest{
   }
 
   @Test
-  public void store_assignesMultipleBrandsSuccessfully() {
+  public void store_addBrandesMultipleBrandsSuccessfully() {
     Store store = new Store("CHICO", "121 Sam St. LA", "(909) 222-2222");
     store.save();
     Brand firstBrand = new Brand("Puma");
     firstBrand.save();
     Brand secondBrand = new Brand("Nike");
     secondBrand.save();
-    store.assign(firstBrand);
-    store.assign(secondBrand);
+    store.addBrand(firstBrand);
+    store.addBrand(secondBrand);
     assertTrue(store.getBrands().get(1).equals(firstBrand));
     assertTrue(store.getBrands().get(0).equals(secondBrand));
   }
@@ -54,8 +54,8 @@ public class  StoreTest{
     firstBrand.save();
     Brand secondBrand = new Brand("Nike");
     secondBrand.save();
-    store.assign(firstBrand);
-    store.assign(secondBrand);
+    store.addBrand(firstBrand);
+    store.addBrand(secondBrand);
     store.delete();
     assertEquals(0, Store.all().size());
   }

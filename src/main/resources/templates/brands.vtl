@@ -5,7 +5,7 @@
     <button type="submit" class="btn btn-default add-brand-btn">Add</button>
   </div>
 </form>
-<div class="col-md-4">
+<div class="col-md-5">
   <table class="table">
     <thead>
       <tr>
@@ -29,34 +29,57 @@
               </td>
             </form>
           #else
-            <td><a href="/brands/$brand.getId()">$brand.getName()</a></td>
-            <td><a href="/brands/change/$brand.getId()">change</a></td>
+            <td class="fix-width-7p"><a href="/brands/$brand.getId()">$brand.getName()</a></td>
+            <td>
+
+              <div class="btn-toolbar" role="toolbar">
+                <div class="btn-group">
+                  <form action="/brands/change/$brand.getId()" method="get">
+                    <button class="btn btn-default" id="update-$brand.getId()" type="submit" aria-label="Left Align">
+                      <span class="glyphicon glyphicon-retweet" aria-hidden="true"></span>
+                    </button>
+                  </form>
+                </div>
+                <div class="btn-group">
+                  <form action="/bradns/remove/$brand.getId()" method="post">
+                    <button class="btn btn-default" id="delete-$brand.getId()" type="submit">
+                      <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                    </button>
+                  </form>
+                </div>
+              </div>
+            </td>
           #end
         </tr>
       #end
     </tbody>
   </table>
 </div>
-<div class="col-md-8">
+<div class="col-md-7">
   #if ($brand)
+  <h4>Stores for brend <strong>$brand.getName()</h4>
     <p>Some information may not be accurate</p>
     #foreach ($store in $brand.getStores())
       <div class="panel panel-default">
-        <div class="panel-heading">Stores for brend <strong>$brand.getName()</strong></div>
+        <div class="panel-heading"><h4><a href="/store/$store.getId()">$store.getName()</a></h4></strong></div>
         <table class="table">
           <thead>
             <tr>
-              <th>Name</th>
+              <th> </th>
               <th>Contact information</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td><p><a href="/store/$store.getId()">$store.getName()</a></p></td>
               <td>
-                <p>$store.getAddress()</p>
+                <p>Address:</p>
                 <br>
-                <p>$store.getPhoneNumber()</p>
+                <p>Phone Number:</p>
+              </td>
+              <td>
+                <p><strong>$store.getAddress()</strong></p>
+                <br>
+                <p><strong>$store.getPhoneNumber()</strong></p>
               </td>
             </tr>
           </tbody>
