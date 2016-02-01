@@ -171,6 +171,17 @@ public class IntegrationTest extends FluentTest {
     assertThat(pageSource()).doesNotContain("CHICO");
   }
 
-
+  @Test
+  public void store_foundByName() {
+    Store store = new Store("CHICCO", "121 Sam St. LA", "(909) 222-2222");
+    store.save();
+    Brand brand = new Brand("Ecco");
+    brand.save();
+    store.addBrand(brand);
+    goTo("http://localhost:4567/");
+    fill("#search").with("chicco");
+    submit("#btn-search");
+    assertThat(pageSource()).contains("121 Sam St. LA");
+  }
 
 }
