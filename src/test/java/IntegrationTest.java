@@ -159,6 +159,7 @@ public class IntegrationTest extends FluentTest {
     submit("#deleteAll");
     assertThat(pageSource()).doesNotContain("CHICO");
     assertThat(pageSource()).doesNotContain("Forever 21");
+  }
 
   @Test
   public void store_deletedSuccessfully() {
