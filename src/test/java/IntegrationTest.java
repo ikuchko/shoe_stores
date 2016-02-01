@@ -149,6 +149,18 @@ public class IntegrationTest extends FluentTest {
     assertThat(pageSource()).contains("Ecco");
   }
 
+  @Test
+  public void stores_deletedAllStores() {
+    Store store = new Store("CHICO", "121 Sam St. LA", "(909) 222-2222");
+    store.save();
+    Store secondStore = new Store("Forever 21", "12 Sam St. LA", "(909) 222-2222");
+    secondStore.save();
+    goTo("http://localhost:4567/stores/");
+    submit("#deleteAll");
+    assertThat(pageSource()).doesNotContain("CHICO");
+    assertThat(pageSource()).doesNotContain("Forever 21");
+  }
+
 
 
 }

@@ -96,6 +96,17 @@ public class Store {
     }
   }
 
+  public static void deleteAll() {
+    String sqlJoinDelete = "DELETE FROM stores_brands";
+    String sqlDeleteStore = "DELETE FROM stores";
+    try (Connection con = DB.sql2o.open()) {
+      con.createQuery(sqlJoinDelete, true)
+        .executeUpdate();
+      con.createQuery(sqlDeleteStore, true)
+        .executeUpdate();
+    }
+  }
+
   public void addBrand(Brand brand) {
     int amount;
     String sqlCheck = "SELECT count(id) FROM stores_brands WHERE store_id = :store_id AND brand_id = :brand_id";

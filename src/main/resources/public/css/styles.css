@@ -70,7 +70,7 @@ a {
 }
 
 button {
-  background-color: #eee;
+  background-color: #eee !important;
 }
 
 a.small {
