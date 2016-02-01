@@ -131,7 +131,7 @@ public class IntegrationTest extends FluentTest {
     Store store = new Store("CHICO", "121 Sam St. LA", "(909) 222-2222");
     store.save();
     goTo("http://localhost:4567/store/" + store.getId());
-    click("a", withText("found a bug?"));
+    click("a", withText("found a bug"));
     fill("#updatename").with("Forever 21");
     submit(".btn-update");
     assertThat(pageSource()).contains("Forever 21");
@@ -147,6 +147,16 @@ public class IntegrationTest extends FluentTest {
     fillSelect("#brandSelection").withText(brand.getName());
     submit("#submitSelection");
     assertThat(pageSource()).contains("Ecco");
+  }
+
+  @Test
+  public void store_deletedSuccessfully() {
+    Store store = new Store("CHICO", "121 Sam St. LA", "(909) 222-2222");
+    store.save();
+    goTo("http://localhost:4567/store/" + store.getId());
+    submit(".link");
+    assertThat(pageSource()).contains("ADD NEW STORE");
+    assertThat(pageSource()).doesNotContain("CHICO");
   }
 
 
