@@ -60,4 +60,20 @@ public class  StoreTest{
     assertEquals(0, Store.all().size());
   }
 
+  @Test
+  public void storeAll_deletedSuccessfully() {
+    Store store = new Store("CHICO", "121 Sam St. LA", "(909) 222-2222");
+    store.save();
+    Store secondStore = new Store("Forever 21", "122 Sam St. LA", "(909) 222-2222");
+    secondStore.save();
+    Brand firstBrand = new Brand("Puma");
+    firstBrand.save();
+    Brand secondBrand = new Brand("Nike");
+    secondBrand.save();
+    store.addBrand(firstBrand);
+    secondStore.addBrand(secondBrand);
+    Store.deleteAll();
+    assertEquals(0, Store.all().size());
+  }
+
 }

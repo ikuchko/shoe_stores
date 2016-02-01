@@ -108,5 +108,11 @@ public class App {
         return null;
       });
 
+      post("/stores/deleteall", (request, response) -> {
+        Store.deleteAll();
+        response.redirect("/stores");
+        return null;
+      });
+
   }
 }
