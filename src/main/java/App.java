@@ -114,5 +114,12 @@ public class App {
         return null;
       });
 
+      post("/store/delete/:id", (request, response) -> {
+        Store store = Store.find(Integer.parseInt(request.params("id")));
+        store.delete();
+        response.redirect("/stores");
+        return null;
+      });
+
   }
 }

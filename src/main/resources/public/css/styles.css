@@ -73,7 +73,16 @@ button {
   background-color: #eee !important;
 }
 
-a.small {
+.small-text {
   font-size: 10px;
   color: #B73398;
+}
+
+.link {
+  background:none!important;
+  border:none;
+  padding:0!important;
+  font: inherit;
+  cursor: pointer;
+  color: #947133;
 }
