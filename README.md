@@ -36,7 +36,10 @@ $ gradle run
 ##Database information
 In PSQL:
 ```
-
+CREATE DATABASE shoe_stores;
+CREATE TABLE stores (id serial PRIMARY KEY, name varchar, address varchar, phone_number varchar);
+CREATE TABLE brands (id serial PRIMARY KEY, name varchar);
+CREATE TABLE stores_brands (id serial PRIMARY KEY, int store_id REFERENCES stores (id), int brand_id REFERENCES brands (id));
 ```
 
 ## Legal

@@ -10,14 +10,14 @@ SET check_function_bodies = false;
 SET client_min_messages = warning;
 
 --
--- Name: plpgsql; Type: EXTENSION; Schema: -; Owner:
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
 --
 
 CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
 
 
 --
--- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner:
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
 --
 
 COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
@@ -30,7 +30,7 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
--- Name: brands; Type: TABLE; Schema: public; Owner: Guest; Tablespace:
+-- Name: brands; Type: TABLE; Schema: public; Owner: iliak; Tablespace: 
 --
 
 CREATE TABLE brands (
@@ -39,10 +39,10 @@ CREATE TABLE brands (
 );
 
 
-ALTER TABLE brands OWNER TO "Guest";
+ALTER TABLE brands OWNER TO iliak;
 
 --
--- Name: brands_id_seq; Type: SEQUENCE; Schema: public; Owner: Guest
+-- Name: brands_id_seq; Type: SEQUENCE; Schema: public; Owner: iliak
 --
 
 CREATE SEQUENCE brands_id_seq
@@ -53,17 +53,17 @@ CREATE SEQUENCE brands_id_seq
     CACHE 1;
 
 
-ALTER TABLE brands_id_seq OWNER TO "Guest";
+ALTER TABLE brands_id_seq OWNER TO iliak;
 
 --
--- Name: brands_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: Guest
+-- Name: brands_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: iliak
 --
 
 ALTER SEQUENCE brands_id_seq OWNED BY brands.id;
 
 
 --
--- Name: stores; Type: TABLE; Schema: public; Owner: Guest; Tablespace:
+-- Name: stores; Type: TABLE; Schema: public; Owner: iliak; Tablespace: 
 --
 
 CREATE TABLE stores (
@@ -74,10 +74,10 @@ CREATE TABLE stores (
 );
 
 
-ALTER TABLE stores OWNER TO "Guest";
+ALTER TABLE stores OWNER TO iliak;
 
 --
--- Name: stores_brands; Type: TABLE; Schema: public; Owner: Guest; Tablespace:
+-- Name: stores_brands; Type: TABLE; Schema: public; Owner: iliak; Tablespace: 
 --
 
 CREATE TABLE stores_brands (
@@ -87,10 +87,10 @@ CREATE TABLE stores_brands (
 );
 
 
-ALTER TABLE stores_brands OWNER TO "Guest";
+ALTER TABLE stores_brands OWNER TO iliak;
 
 --
--- Name: stores_brands_id_seq; Type: SEQUENCE; Schema: public; Owner: Guest
+-- Name: stores_brands_id_seq; Type: SEQUENCE; Schema: public; Owner: iliak
 --
 
 CREATE SEQUENCE stores_brands_id_seq
@@ -101,17 +101,17 @@ CREATE SEQUENCE stores_brands_id_seq
     CACHE 1;
 
 
-ALTER TABLE stores_brands_id_seq OWNER TO "Guest";
+ALTER TABLE stores_brands_id_seq OWNER TO iliak;
 
 --
--- Name: stores_brands_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: Guest
+-- Name: stores_brands_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: iliak
 --
 
 ALTER SEQUENCE stores_brands_id_seq OWNED BY stores_brands.id;
 
 
 --
--- Name: stores_id_seq; Type: SEQUENCE; Schema: public; Owner: Guest
+-- Name: stores_id_seq; Type: SEQUENCE; Schema: public; Owner: iliak
 --
 
 CREATE SEQUENCE stores_id_seq
@@ -122,88 +122,92 @@ CREATE SEQUENCE stores_id_seq
     CACHE 1;
 
 
-ALTER TABLE stores_id_seq OWNER TO "Guest";
+ALTER TABLE stores_id_seq OWNER TO iliak;
 
 --
--- Name: stores_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: Guest
+-- Name: stores_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: iliak
 --
 
 ALTER SEQUENCE stores_id_seq OWNED BY stores.id;
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: Guest
+-- Name: id; Type: DEFAULT; Schema: public; Owner: iliak
 --
 
 ALTER TABLE ONLY brands ALTER COLUMN id SET DEFAULT nextval('brands_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: Guest
+-- Name: id; Type: DEFAULT; Schema: public; Owner: iliak
 --
 
 ALTER TABLE ONLY stores ALTER COLUMN id SET DEFAULT nextval('stores_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: Guest
+-- Name: id; Type: DEFAULT; Schema: public; Owner: iliak
 --
 
 ALTER TABLE ONLY stores_brands ALTER COLUMN id SET DEFAULT nextval('stores_brands_id_seq'::regclass);
 
 
 --
--- Data for Name: brands; Type: TABLE DATA; Schema: public; Owner: Guest
+-- Data for Name: brands; Type: TABLE DATA; Schema: public; Owner: iliak
 --
 
 COPY brands (id, name) FROM stdin;
-1	Abibas
-5	Nike
 6	Senchio avari
+5	Nikes
+1	Abibas
 \.
 
 
 --
--- Name: brands_id_seq; Type: SEQUENCE SET; Schema: public; Owner: Guest
+-- Name: brands_id_seq; Type: SEQUENCE SET; Schema: public; Owner: iliak
 --
 
-SELECT pg_catalog.setval('brands_id_seq', 6, true);
+SELECT pg_catalog.setval('brands_id_seq', 12, true);
 
 
 --
--- Data for Name: stores; Type: TABLE DATA; Schema: public; Owner: Guest
+-- Data for Name: stores; Type: TABLE DATA; Schema: public; Owner: iliak
 --
 
 COPY stores (id, name, address, phone_number) FROM stdin;
-1	CHICO	123 Add St. AM	(999)999-00-11
+10	CHICCO	617 Broadway Blvd. Seatle	(000) 123-4455
+11	Happy Baby	27 Shevchenko St. Poltava	(066) 462-8699
 \.
 
 
 --
--- Data for Name: stores_brands; Type: TABLE DATA; Schema: public; Owner: Guest
+-- Data for Name: stores_brands; Type: TABLE DATA; Schema: public; Owner: iliak
 --
 
 COPY stores_brands (id, store_id, brand_id) FROM stdin;
-1	1	1
+8	10	1
+9	11	6
+10	11	5
+11	11	1
 \.
 
 
 --
--- Name: stores_brands_id_seq; Type: SEQUENCE SET; Schema: public; Owner: Guest
+-- Name: stores_brands_id_seq; Type: SEQUENCE SET; Schema: public; Owner: iliak
 --
 
-SELECT pg_catalog.setval('stores_brands_id_seq', 1, true);
-
-
---
--- Name: stores_id_seq; Type: SEQUENCE SET; Schema: public; Owner: Guest
---
-
-SELECT pg_catalog.setval('stores_id_seq', 1, true);
+SELECT pg_catalog.setval('stores_brands_id_seq', 11, true);
 
 
 --
--- Name: brands_pkey; Type: CONSTRAINT; Schema: public; Owner: Guest; Tablespace:
+-- Name: stores_id_seq; Type: SEQUENCE SET; Schema: public; Owner: iliak
+--
+
+SELECT pg_catalog.setval('stores_id_seq', 11, true);
+
+
+--
+-- Name: brands_pkey; Type: CONSTRAINT; Schema: public; Owner: iliak; Tablespace: 
 --
 
 ALTER TABLE ONLY brands
@@ -211,7 +215,7 @@ ALTER TABLE ONLY brands
 
 
 --
--- Name: stores_brands_pkey; Type: CONSTRAINT; Schema: public; Owner: Guest; Tablespace:
+-- Name: stores_brands_pkey; Type: CONSTRAINT; Schema: public; Owner: iliak; Tablespace: 
 --
 
 ALTER TABLE ONLY stores_brands
@@ -219,7 +223,7 @@ ALTER TABLE ONLY stores_brands
 
 
 --
--- Name: stores_pkey; Type: CONSTRAINT; Schema: public; Owner: Guest; Tablespace:
+-- Name: stores_pkey; Type: CONSTRAINT; Schema: public; Owner: iliak; Tablespace: 
 --
 
 ALTER TABLE ONLY stores
@@ -227,7 +231,7 @@ ALTER TABLE ONLY stores
 
 
 --
--- Name: stores_brands_brand_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: Guest
+-- Name: stores_brands_brand_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: iliak
 --
 
 ALTER TABLE ONLY stores_brands
@@ -235,7 +239,7 @@ ALTER TABLE ONLY stores_brands
 
 
 --
--- Name: stores_brands_store_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: Guest
+-- Name: stores_brands_store_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: iliak
 --
 
 ALTER TABLE ONLY stores_brands
@@ -243,15 +247,16 @@ ALTER TABLE ONLY stores_brands
 
 
 --
--- Name: public; Type: ACL; Schema: -; Owner: epicodus
+-- Name: public; Type: ACL; Schema: -; Owner: postgres
 --
 
 REVOKE ALL ON SCHEMA public FROM PUBLIC;
-REVOKE ALL ON SCHEMA public FROM epicodus;
-GRANT ALL ON SCHEMA public TO epicodus;
+REVOKE ALL ON SCHEMA public FROM postgres;
+GRANT ALL ON SCHEMA public TO postgres;
 GRANT ALL ON SCHEMA public TO PUBLIC;
 
 
 --
 -- PostgreSQL database dump complete
 --
+
