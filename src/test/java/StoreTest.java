@@ -60,4 +60,24 @@ public class  StoreTest{
     assertEquals(0, Store.all().size());
   }
 
+  @Test
+  public void store_searchByStoreName() {
+    Store store = new Store("CHICO", "121 Sam St. LA", "(909) 222-2222");
+    store.save();
+    Brand brand = new Brand("Puma");
+    brand.save();
+    store.addBrand(brand);
+    assertEquals(store, Store.find("chico").get(0));
+  }
+
+  @Test
+  public void store_searchByBrandName() {
+    Store store = new Store("CHICO", "121 Sam St. LA", "(909) 222-2222");
+    store.save();
+    Brand brand = new Brand("Puma");
+    brand.save();
+    store.addBrand(brand);
+    assertEquals(store, Store.find(brand.getName()).get(0));
+  }
+
 }

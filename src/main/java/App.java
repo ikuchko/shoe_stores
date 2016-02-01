@@ -65,6 +65,14 @@ public class App {
         return new ModelAndView(model, layout);
       }, new VelocityTemplateEngine());
 
+      get("/search", (request, response) -> {
+        HashMap<String, Object> model = new HashMap<String, Object>();
+        model.put("template", "templates/stores.vtl");
+        List<Store> stores = Store.find(request.queryParams("search"));
+        model.put("stores", stores);
+        return new ModelAndView(model, layout);
+      }, new VelocityTemplateEngine());
+
       post("/brand/add", (request, response) -> {
         Brand brand = new Brand(request.queryParams("newbrand"));
         brand.save();

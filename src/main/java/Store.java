@@ -125,5 +125,24 @@ public class Store {
     }
   }
 
+  public static List<Store> find(String name) {
+    List<Store> stores;
+    // String sql = "SELECT stores.id AS mId, stores.name AS mName, stores.address AS mAddress, stores.phone_number AS mPhoneNumber FROM brands " +
+    //              "INNER JOIN stores_brands AS s_b ON brands.id = s_b.brand_id " +
+    //              "INNER JOIN stores ON stores.id = s_b.store_id WHERE LOWER(stores.name) LIKE LOWER(:name) OR LOWER(brands.name) LIKE LOWER(:name) GROUP BY stores.id, stores.name ORDER BY brands.name ";
+    String sqlStores = "SELECT id AS mId, name AS mName, address AS mAddress, phone_number AS mPhoneNumber FROM stores WHERE LOWER(name) like LOWER (:name) ORDER BY stores.name";
+    String sqlBrands = "SELECT stores.id AS mId, stores.name AS mName, stores.address AS mAddress, stores.phone_number AS mPhoneNumber FROM brands " +
+                 "INNER JOIN stores_brands AS s_b ON brands.id = s_b.brand_id " +
+                 "INNER JOIN stores ON stores.id = s_b.store_id WHERE LOWER(brands.name) LIKE LOWER(:name) ORDER BY stores.name";
+    try (Connection con = DB.sql2o.open()) {
+      stores = con.createQuery(sqlStores)
+        .addParameter("name", "%" + name + "%")
+        .executeAndFetch(Store.class);
+      stores.addAll(con.createQuery(sqlBrands)
+        .addParameter("name", "%" + name + "%")
+        .executeAndFetch(Store.class));
+      return stores;
+    }
+  }
 
 }
